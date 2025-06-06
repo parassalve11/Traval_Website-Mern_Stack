@@ -153,7 +153,7 @@ const Gallery = () => {
         {/* Back to Home Button */}
         <div className="text-center mt-6">
           <a
-            href="/"
+            href="/gallary"
             ref={buttonRef}
             className="inline-flex items-center gap-2 px-5 py-2 text-sm md:text-base text-white bg-teal-600 rounded-full hover:bg-teal-700 transition-all font-body"
             aria-label="Back to Home"

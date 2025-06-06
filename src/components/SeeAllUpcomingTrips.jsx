@@ -162,7 +162,7 @@ const SeeAllUpcomingTrips = () => {
   );
 };
 
-const trips = [
+export const trips = [
   {
     title: 'Manali',
     duration: '2N/3D',

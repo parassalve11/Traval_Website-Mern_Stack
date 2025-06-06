@@ -9,7 +9,7 @@ export default function GallaryPage() {
   return (
     <div className='mt-4'>
         <Gallery />
-         <MediaGrid />
+        <MediaGrid />
     </div>
   )
 }
