@@ -1,8 +1,7 @@
-
-import React, { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { FaStar } from 'react-icons/fa';
-import TravelGallery from './ui/ImageAresal'; 
+import React, { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { FaStar } from "react-icons/fa";
+import TravelGallery from "./ui/ImageAresal";
 
 const HeroSection = () => {
   const videoRef1 = useRef(null);
@@ -11,12 +10,13 @@ const HeroSection = () => {
   const textRef = useRef(null);
   const statsRef = useRef(null);
   const ctaRef = useRef(null);
+  const galleryRef = useRef(null);
 
   useEffect(() => {
     const videos = [videoRef1.current, videoRef2.current, videoRef3.current].filter(Boolean);
 
-    // Set initial state: video3 visible, others hidden
-    if (videos[2]) {
+    // Set initial state
+    if (videos.length > 0) {
       gsap.set(videos[2], { opacity: 1, zIndex: 1 });
       gsap.set(videos.slice(0, 2), { opacity: 0, zIndex: 0 });
     }
@@ -28,14 +28,14 @@ const HeroSection = () => {
       tl.to(videos[index], {
         opacity: 0,
         duration: 1,
-        ease: 'power2.inOut',
+        ease: "power2.inOut",
         onStart: () => {
           videos.forEach((v, i) => {
-            if (v) v.style.zIndex = i === nextIndex ? '1' : '0';
+            if (v) v.style.zIndex = i === nextIndex ? "1" : "0";
           });
         },
       })
-        .to(videos[nextIndex], { opacity: 1, duration: 1, ease: 'power2.inOut' }, '-=0.8')
+        .to(videos[nextIndex], { opacity: 1, duration: 1, ease: "power2.inOut" }, "-=0.8")
         .to({}, { duration: 8 });
     });
 
@@ -48,14 +48,14 @@ const HeroSection = () => {
           opacity: 1,
           y: 0,
           duration: 1.5,
-          ease: 'power3.out',
+          ease: "power3.out",
           onComplete: () => {
             gsap.to(textRef.current, {
               y: -10,
               duration: 3,
               repeat: -1,
               yoyo: true,
-              ease: 'sine.inOut',
+              ease: "sine.inOut",
             });
           },
         }
@@ -72,7 +72,7 @@ const HeroSection = () => {
           y: 0,
           duration: 1,
           stagger: 0.3,
-          ease: 'back.out(1.4)',
+          ease: "back.out(1.4)",
           delay: 0.5,
         }
       );
@@ -83,81 +83,107 @@ const HeroSection = () => {
       gsap.fromTo(
         ctaRef.current,
         { opacity: 0, scale: 0.8 },
-        { opacity: 1, scale: 1, duration: 1, ease: 'back.out(1.7)', delay: 1 }
+        { opacity: 1, scale: 1, duration: 1, ease: "back.out(1.7)", delay: 1 }
       );
     }
 
-    // Interactive hover effects
+    // Gallery animation (minimal, fade-in only)
+    if (galleryRef.current) {
+      gsap.fromTo(
+        galleryRef.current,
+        { opacity: 0 },
+        { opacity: 1, duration: 1, ease: "power3.out", delay: 1.5 }
+      );
+    }
+
+    // Interactive hover effects for textElements
     const textElements = textRef.current?.children ? gsap.utils.toArray(textRef.current.children) : [];
-    textElements.forEach((el) => {
+    const textListeners = textElements.map((el) => {
       const onMouseEnter = () => {
         gsap.to(el, {
           scale: 1.05,
-          color: '#10b981',
-          textShadow: '0 0 10px rgba(16, 185, 129, 0.7)',
+          color: "#10b981",
+          textShadow: "0 0 10px rgba(16, 185, 129, 0.7)",
           duration: 0.3,
         });
       };
       const onMouseLeave = () => {
         gsap.to(el, {
           scale: 1,
-          color: '#ffffff',
-          textShadow: 'none',
+          color: "#ffffff",
+          textShadow: "none",
           duration: 0.3,
         });
       };
-      el.addEventListener('mouseenter', onMouseEnter);
-      el.addEventListener('mouseleave', onMouseLeave);
+      el.addEventListener("mouseenter", onMouseEnter);
+      el.addEventListener("mouseleave", onMouseLeave);
+      return { el, onMouseEnter, onMouseLeave };
     });
 
+    // Interactive hover effects for statsElements
     const statsElements = statsRef.current?.children ? gsap.utils.toArray(statsRef.current.children) : [];
-    statsElements.forEach((el) => {
+    const statsListeners = statsElements.map((el) => {
       const onMouseEnter = () => {
         gsap.to(el, { scale: 1.1, duration: 0.3 });
       };
       const onMouseLeave = () => {
         gsap.to(el, { scale: 1, duration: 0.3 });
       };
-      el.addEventListener('mouseenter', onMouseEnter);
-      el.addEventListener('mouseleave', onMouseLeave);
+      el.addEventListener("mouseenter", onMouseEnter);
+      el.addEventListener("mouseleave", onMouseLeave);
+      return { el, onMouseEnter, onMouseLeave };
     });
 
+    // Interactive hover effects for CTA
     let ctaEnter, ctaLeave;
     if (ctaRef.current) {
       ctaEnter = () => {
         gsap.to(ctaRef.current, {
           scale: 1.1,
-          boxShadow: '0 0 15px rgba(16, 185, 129, 0.8)',
-          background: 'linear-gradient(45deg, #1a5c38, #10b981)',
+          boxShadow: "0 0 15px rgba(16, 185, 129, 0.8)",
+          background: "linear-gradient(45deg, #1a5c38, #10b981)",
           duration: 0.3,
         });
       };
       ctaLeave = () => {
         gsap.to(ctaRef.current, {
           scale: 1,
-          boxShadow: 'none',
-          background: '#10b981',
+          boxShadow: "none",
+          background: "#10b981",
           duration: 0.3,
         });
       };
-      ctaRef.current.addEventListener('mouseenter', ctaEnter);
-      ctaRef.current.addEventListener('mouseleave', ctaLeave);
+      ctaRef.current.addEventListener("mouseenter", ctaEnter);
+      ctaRef.current.addEventListener("mouseleave", ctaLeave);
     }
 
     // Cleanup
     return () => {
-      textElements.forEach((el) => {
-        el.removeEventListener('mouseenter', () => {});
-        el.removeEventListener('mouseleave', () => {});
+      textListeners.forEach(({ el, onMouseEnter, onMouseLeave }) => {
+        if (el) {
+          el.removeEventListener("mouseenter", onMouseEnter);
+          el.removeEventListener("mouseleave", onMouseLeave);
+        }
       });
-      statsElements.forEach((el) => {
-        el.removeEventListener('mouseenter', () => {});
-        el.removeEventListener('mouseleave', () => {});
+      statsListeners.forEach(({ el, onMouseEnter, onMouseLeave }) => {
+        if (el) {
+          el.removeEventListener("mouseenter", onMouseEnter);
+          el.removeEventListener("mouseleave", onMouseLeave);
+        }
       });
       if (ctaRef.current && ctaEnter && ctaLeave) {
-        ctaRef.current.removeEventListener('mouseenter', ctaEnter);
-        ctaRef.current.removeEventListener('mouseleave', ctaLeave);
+        ctaRef.current.removeEventListener("mouseenter", ctaEnter);
+        ctaRef.current.removeEventListener("mouseleave", ctaLeave);
       }
+      gsap.killTweensOf([
+        videoRef1.current,
+        videoRef2.current,
+        videoRef3.current,
+        textRef.current,
+        statsRef.current?.children,
+        ctaRef.current,
+        galleryRef.current,
+      ]);
     };
   }, []);
 
@@ -167,7 +193,7 @@ const HeroSection = () => {
       <video
         ref={videoRef1}
         className="absolute top-0 left-0 w-full h-full object-cover"
-        style={{ willChange: 'opacity' }}
+        style={{ willChange: "opacity" }}
         src="/video1.mp4"
         autoPlay
         loop
@@ -177,7 +203,7 @@ const HeroSection = () => {
       <video
         ref={videoRef2}
         className="absolute top-0 left-0 w-full h-full object-cover"
-        style={{ willChange: 'opacity' }}
+        style={{ willChange: "opacity" }}
         src="/video4.mp4"
         autoPlay
         loop
@@ -187,7 +213,7 @@ const HeroSection = () => {
       <video
         ref={videoRef3}
         className="absolute top-0 left-0 w-full h-full object-cover"
-        style={{ willChange: 'opacity' }}
+        style={{ willChange: "opacity" }}
         src="/video3.mp4"
         autoPlay
         loop
@@ -199,7 +225,7 @@ const HeroSection = () => {
       <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50"></div>
 
       {/* Hero Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center text-white px-4 sm:px-6 md:px-8 ">
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center text-white px-4 sm:px-6 md:px-8">
         <div ref={textRef} className="mb-8">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 cursor-pointer font-display">
             Discover New Horizons
@@ -247,7 +273,10 @@ const HeroSection = () => {
       </div>
 
       {/* Travel Gallery at Bottom Center */}
-      <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-5xl z-20">
+      <div
+        ref={galleryRef}
+        className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-full max-w-[90%] sm:max-w-[80%] md:max-w-3xl h-28 sm:h-36 md:h-44 z-20"
+      >
         <TravelGallery />
       </div>
     </div>

@@ -200,9 +200,7 @@ const Navbar = () => {
               </a>
             </div>
           </div>
-          <a href="/contact" className="nav-link text-white hover:text-teal-600 transition-colors">
-            Contact
-          </a>
+        
           <a
             href="/gallary"
             ref={(el) => (galleryButtonRefs.current[0] = el)}

@@ -164,7 +164,7 @@ const Footer = () => {
               {galleryImages.map((image, index) => (
                 <a
                   key={index}
-                  href={`/gallery/${image.title.toLowerCase()}`}
+                  href={`/gallary`}
                   className="block rounded-md overflow-hidden border border-teal-600"
                   aria-label={`View ${image.title} gallery`}
                 >
@@ -176,7 +176,7 @@ const Footer = () => {
                 </a>
               ))}
             </div>
-            <a href="/gallery" className="footer-link hover:text-teal-600 font-body flex items-center gap-2">
+            <a href="/gallary" className="footer-link hover:text-teal-600 font-body flex items-center gap-2">
               <FaImages className="text-teal-600" /> View Full Gallery
             </a>
           </div>

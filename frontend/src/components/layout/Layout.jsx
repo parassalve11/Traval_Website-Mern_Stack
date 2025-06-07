@@ -8,6 +8,8 @@ export default function Layout({children}) {
 <main className='w-full m-auto'>
 {children}
 </main>
-<Footer />
+<div className="">
+  <Footer />
+</div>
   </div>
 }
