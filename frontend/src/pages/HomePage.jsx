@@ -6,6 +6,7 @@ import SeeAllUpcomingTrips from '../components/SeeAllUpcomingTrips';
 import HowItWorks from '../components/HowItWorks';
 import Gallery from '../components/Gallery';
 import BookingForm from '../components/form/BookingForm';
+import ReviewsPage from './ReviewPage';
 
 
 
@@ -23,6 +24,7 @@ const HomePage = () => {
     <Gallery />
     <HowItWorks />
     <BookingForm />
+    <ReviewsPage />
     
     
    </div>
