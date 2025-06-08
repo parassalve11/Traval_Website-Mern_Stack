@@ -223,15 +223,15 @@ const Footer = () => {
 const galleryImages = [
   {
     title: 'Manali',
-    url: 'https://images.unsplash.com/photo-1597073867736-6758e842e983?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=60',
+    url: 'https://images.unsplash.com/photo-1626407339413-60f4e6bc455e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fG1haGFyYXNodHJhfGVufDB8fDB8fHww',
   },
   {
     title: 'Goa',
-    url: 'https://images.unsplash.com/photo-1514282401047-d2e53feda951?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=60',
+    url: 'https://images.unsplash.com/photo-1573143950521-36ef5345dae9?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8bWFoYXJhc2h0cmF8ZW58MHx8MHx8fDA%3D',
   },
   {
     title: 'Ladakh',
-    url: 'https://images.unsplash.com/photo-1597751853364-2c3e53e798dd?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=60',
+    url: 'https://images.unsplash.com/photo-1519955266818-0231b63402bc?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGluZGlhfGVufDB8fDB8fHww',
   },
 ];
 

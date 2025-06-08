@@ -7,7 +7,7 @@ import HowItWorks from '../components/HowItWorks';
 import Gallery from '../components/Gallery';
 import BookingForm from '../components/form/BookingForm';
 import ReviewsPage from './ReviewPage';
-
+import MediaGrid from '../components/MediaGrid'
 
 
 const HomePage = () => {
@@ -24,6 +24,7 @@ const HomePage = () => {
     <Gallery />
     <HowItWorks />
     <BookingForm />
+    <MediaGrid />
     <ReviewsPage />
     
     

@@ -148,7 +148,7 @@ const SeeAllUpcomingTrips = () => {
               </div>
               {/* Book Now Button (always visible) */}
               <a
-                href={`/booking/${trip.title.toLowerCase()}`}
+                href={`/booking`}
                 className="book-now-button inline-block px-6 py-2 text-white bg-teal-800 rounded-full transition-all font-body z-20 absolute bottom-6 left-6 right-6 text-center"
                 aria-label={`Book trip to ${trip.title}`}
               >

@@ -99,7 +99,7 @@ const HowItWorks = () => {
       <div className="container mx-auto px-4 sm:px-6 md:px-8">
         <h2
           ref={headingRef}
-          className="text-3xl sm:text-4xl md:text-5xl font-bold text-center text-teal-800 mb-4 font-display"
+          className="text-3xl sm:text-4xl md:text-5xl font-bold text-center text-teal-800 mb-4 mt-4 font-display"
         >
           How It Works
         </h2>

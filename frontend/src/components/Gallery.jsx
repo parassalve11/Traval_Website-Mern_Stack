@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import { FaArrowRight, FaChevronDown } from 'react-icons/fa';
 import ImageMouseTrail from './ui/ImageMouseTrail'; // Adjust path as needed
 
 const Gallery = () => {
@@ -10,6 +10,7 @@ const Gallery = () => {
   const buttonRef = useRef(null);
   const showcaseTextRef = useRef(null);
   const tapPromptRef = useRef(null);
+  const scrollDownRef = useRef(null);
   const [showTapPrompt, setShowTapPrompt] = useState(true);
 
   useEffect(() => {
@@ -22,7 +23,7 @@ const Gallery = () => {
       );
     }
 
-    // Staggered animation for heading, description, showcase text, tap prompt, and button
+    // Staggered animation for heading, description, showcase text, tap prompt, button, and scroll down
     gsap.fromTo(
       [
         headingRef.current,
@@ -30,10 +31,22 @@ const Gallery = () => {
         showcaseTextRef.current,
         tapPromptRef.current,
         buttonRef.current,
+        scrollDownRef.current,
       ].filter(Boolean),
       { opacity: 0, y: 10 },
       { opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: 'power2.out', delay: 0.3 }
     );
+
+    // Scroll down animation
+    if (scrollDownRef.current) {
+      gsap.to(scrollDownRef.current, {
+        y: 8,
+        duration: 1,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut',
+      });
+    }
 
     // Hover effect for button
     if (buttonRef.current) {
@@ -67,9 +80,32 @@ const Gallery = () => {
       buttonRef.current.addEventListener('mouseenter', onMouseEnter);
       buttonRef.current.addEventListener('mouseleave', onMouseLeave);
 
+      // Hover effect for scroll down
+      const scrollDownMouseEnter = () => {
+        gsap.to(scrollDownRef.current, {
+          scale: 1.1,
+          background: 'linear-gradient(45deg, #1a5c38, #10b981)',
+          boxShadow: '0 0 8px rgba(16, 185, 129, 0.6)',
+          duration: 0.3,
+        });
+      };
+      const scrollDownMouseLeave = () => {
+        gsap.to(scrollDownRef.current, {
+          scale: 1,
+          background: '#10b981',
+          boxShadow: 'none',
+          duration: 0.3,
+        });
+      };
+
+      scrollDownRef.current.addEventListener('mouseenter', scrollDownMouseEnter);
+      scrollDownRef.current.addEventListener('mouseleave', scrollDownMouseLeave);
+
       return () => {
         buttonRef.current?.removeEventListener('mouseenter', onMouseEnter);
         buttonRef.current?.removeEventListener('mouseleave', onMouseLeave);
+        scrollDownRef.current?.removeEventListener('mouseenter', scrollDownMouseEnter);
+        scrollDownRef.current?.removeEventListener('mouseleave', scrollDownMouseLeave);
       };
     }
 
@@ -81,7 +117,7 @@ const Gallery = () => {
         ease: 'power2.out',
         onComplete: () => {
           if (tapPromptRef.current) {
-            (tapPromptRef.current ).style.display = 'none';
+            tapPromptRef.current.style.display = 'none';
           }
         },
       });
@@ -89,7 +125,7 @@ const Gallery = () => {
   }, [showTapPrompt]);
 
   // Travel-themed images with alt text
-   const galleryImages = [
+  const galleryImages = [
     { src: 'https://images.unsplash.com/photo-1514222134-b57cbb8ce073?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGluZGlhfGVufDB8fDB8fHww', alt: 'Snow-capped mountains in Manali' },
     { src: 'https://images.unsplash.com/photo-1496372412473-e8548ffd82bc?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8aW5kaWF8ZW58MHx8MHx8fDA%3D', alt: 'Sunset beach in Goa' },
     { src: 'https://images.unsplash.com/photo-1519955266818-0231b63402bc?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGluZGlhfGVufDB8fDB8fHww', alt: 'Rugged terrain of Ladakh' },
@@ -112,7 +148,7 @@ const Gallery = () => {
   };
 
   return (
-    <section ref={sectionRef} className="bg-black text-white py-12">
+    <section ref={sectionRef} className="bg-black text-white py-12 relative">
       <div className="container mx-auto px-4 sm:px-6 md:px-8">
         {/* Heading and Description */}
         <h1 ref={headingRef} className="text-3xl md:text-4xl font-bold text-teal-600 font-display text-center mb-3">
@@ -156,10 +192,21 @@ const Gallery = () => {
             href="/gallary"
             ref={buttonRef}
             className="inline-flex items-center gap-2 px-5 py-2 text-sm md:text-base text-white bg-teal-600 rounded-full hover:bg-teal-700 transition-all font-body"
-            aria-label="Back to Home"
+            aria-label="View Gallery"
           >
-            <FaArrowRight className="back-arrow text-teal-200 text-sm" /> View Gallary
+            <FaArrowRight className="back-arrow text-teal-200 text-sm" /> View Gallery
           </a>
+        </div>
+
+        {/* Scroll Down Indicator */}
+        <div
+          ref={scrollDownRef}
+          className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 px-3 py-1 text-sm text-white bg-teal-600 bg-opacity-70 rounded-full cursor-pointer font-body md:bottom-6"
+          aria-label="Scroll down to view more content"
+          onClick={() => window.scrollTo({ top: window.scrollY + window.innerHeight, behavior: 'smooth' })}
+        >
+          <span>Scroll Down</span>
+          <FaChevronDown className="text-teal-200" />
         </div>
       </div>
     </section>

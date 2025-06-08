@@ -55,42 +55,42 @@ const destinations = [
     title: 'Manali',
     description: 'Experience the serene hills, adventure sports, and vibrant culture of this Himalayan gem.',
     imageUrl:
-      'https://images.unsplash.com/photo-1597073867736-6758e842e983?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
+      'https://images.unsplash.com/photo-1573143950521-36ef5345dae9?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8bWFoYXJhc2h0cmF8ZW58MHx8MHx8fDA%3D',
   },
   {
     title: 'Jaipur',
     description: 'Explore the Pink City with its majestic forts, palaces, and rich Rajasthani heritage.',
     imageUrl:
-      'https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
+      'https://images.unsplash.com/photo-1626407339413-60f4e6bc455e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fG1haGFyYXNodHJhfGVufDB8fDB8fHww',
   },
   {
     title: 'Kerala Backwaters',
     description: 'Cruise through tranquil waters, lush greenery, and unique houseboat experiences.',
     imageUrl:
-      'https://images.unsplash.com/photo-1618142857173-3d7916d95d71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
+      'https://images.unsplash.com/photo-1519955266818-0231b63402bc?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGluZGlhfGVufDB8fDB8fHww',
   },
   {
     title: 'Goa',
     description: 'Relax on pristine beaches, enjoy vibrant nightlife, and savor coastal cuisine.',
     imageUrl:
-      'https://images.unsplash.com/photo-1514282401047-d2e53feda951?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
+      'https://images.unsplash.com/photo-1519955266818-0231b63402bc?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGluZGlhfGVufDB8fDB8fHww',
   },
   {
     title: 'Ladakh',
     description: 'Discover rugged landscapes, ancient monasteries, and thrilling biking routes.',
     imageUrl:
-      'https://images.unsplash.com/photo-1597751853364-2c3e53e798dd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
+      'https://images.unsplash.com/photo-1519955266818-0231b63402bc?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGluZGlhfGVufDB8fDB8fHww',
   },
   {
     title: 'Varanasi',
     description: 'Immerse in spiritual vibes, ancient ghats, and the sacred Ganges River.',
     imageUrl:
-      'https://images.unsplash.com/photo-1587668178277-295251f432ce?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
+      'https://images.unsplash.com/photo-1573143950521-36ef5345dae9?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8bWFoYXJhc2h0cmF8ZW58MHx8MHx8fDA%3D',
   },
   {
     title: 'Udaipur',
     description: 'Marvel at romantic lakes, grand palaces, and the charm of the City of Lakes.',
     imageUrl:
-      'https://images.unsplash.com/photo-1567337710280-f9c516b6dd4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60',
+      'https://images.unsplash.com/photo-1626407339413-60f4e6bc455e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fG1haGFyYXNodHJhfGVufDB8fDB8fHww',
   },
 ];

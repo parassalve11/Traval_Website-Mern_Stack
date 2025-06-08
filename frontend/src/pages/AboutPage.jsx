@@ -192,7 +192,7 @@ const AboutPage = () => {
         {/* Heading */}
         <h1
           ref={headingRef}
-          className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-gray-900 text-center mb-12"
+          className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-gray-900 mt-12 text-center mb-12"
         >
           About Us
         </h1>
@@ -200,7 +200,7 @@ const AboutPage = () => {
         {/* Intro Section */}
         <div ref={introRef} className="max-w-3xl mx-auto text-center mb-16">
           <p className="text-lg sm:text-xl text-gray-700 font-body mb-4">
-            Welcome to our travel family! At <span className="text-teal-600 font-bold">Travel Website</span>, we believe
+            Welcome to our travel family! At <span className="text-teal-600 font-bold font-serif">SNASAR TRAVALS</span>, we believe
             travel is more than just visiting places – it’s about creating unforgettable experiences.
           </p>
           <p className="text-base sm:text-lg text-gray-600 font-body">

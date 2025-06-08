@@ -5,7 +5,7 @@ import BookingForm from '../components/form/BookingForm'
 
 export default function DestinationPage() {
   return (
-    <div className='mt-10'>
+    <div className='mt-15'>
             <TopCategories />
             <GallaryPage />
             <BookingForm />

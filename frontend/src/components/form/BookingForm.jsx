@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosInstance } from "../../lib/axios";
-import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import { gsap } from "gsap";
 
@@ -20,6 +19,9 @@ const BookingForm = () => {
   const sidebarRef = useRef(null);
   const treeRef = useRef(null);
   const leavesRef = useRef([]);
+  const videoRef1 = useRef(null);
+  const videoRef2 = useRef(null);
+  const videoRef3 = useRef(null);
 
   const queryClient = useQueryClient();
 
@@ -48,6 +50,30 @@ const BookingForm = () => {
   });
 
   useEffect(() => {
+    // Background video transitions
+    const videos = [videoRef1.current, videoRef2.current, videoRef3.current].filter(Boolean);
+    if (videos.length > 0) {
+      gsap.set(videos[2], { opacity: 1, zIndex: 1 });
+      gsap.set(videos.slice(0, 2), { opacity: 0, zIndex: 0 });
+
+      const tl = gsap.timeline({ repeat: -1 });
+      videos.forEach((_, index) => {
+        const nextIndex = (index + 1) % videos.length;
+        tl.to(videos[index], {
+          opacity: 0,
+          duration: 1,
+          ease: "power2.inOut",
+          onStart: () => {
+            videos.forEach((v, i) => {
+              if (v) v.style.zIndex = i === nextIndex ? "1" : "0";
+            });
+          },
+        })
+          .to(videos[nextIndex], { opacity: 1, duration: 1, ease: "power2.inOut" }, "-=0.8")
+          .to({}, { duration: 8 });
+      });
+    }
+
     // Heading animation
     if (headingRef.current) {
       gsap.fromTo(
@@ -108,7 +134,7 @@ const BookingForm = () => {
       );
     }
 
-    // Sidebar animation
+    // Sidebar animation with floating effect
     if (sidebarRef.current) {
       gsap.fromTo(
         sidebarRef.current,
@@ -119,6 +145,15 @@ const BookingForm = () => {
           duration: 1.5,
           ease: "power3.out",
           delay: 0.8,
+          onComplete: () => {
+            gsap.to(sidebarRef.current, {
+              y: -10,
+              duration: 2,
+              repeat: -1,
+              yoyo: true,
+              ease: "sine.inOut",
+            });
+          },
         }
       );
     }
@@ -129,7 +164,7 @@ const BookingForm = () => {
         treeRef.current,
         { opacity: 0, scale: 0.9 },
         {
-          opacity: 0.6, // Slightly higher opacity for white background
+          opacity: 0.5,
           scale: 1,
           duration: 2,
           ease: "power2.out",
@@ -171,6 +206,7 @@ const BookingForm = () => {
         gsap.to(el, {
           scale: 1.05,
           boxShadow: "0 0 10px rgba(16, 185, 129, 0.7)",
+          borderColor: "#10b981",
           duration: 0.3,
         });
       };
@@ -178,6 +214,7 @@ const BookingForm = () => {
         gsap.to(el, {
           scale: 1,
           boxShadow: "none",
+          borderColor: "#d1d5db",
           duration: 0.3,
         });
       };
@@ -221,6 +258,18 @@ const BookingForm = () => {
         buttonRef.current.removeEventListener("mouseenter", buttonEnter);
         buttonRef.current.removeEventListener("mouseleave", buttonLeave);
       }
+      gsap.killTweensOf([
+        videoRef1.current,
+        videoRef2.current,
+        videoRef3.current,
+        headingRef.current,
+        formRef.current,
+        inputRefs.current,
+        buttonRef.current,
+        sidebarRef.current,
+        treeRef.current,
+        leavesRef.current,
+      ]);
     };
   }, []);
 
@@ -293,64 +342,64 @@ const BookingForm = () => {
   };
 
   return (
-    <div className="relative w-full min-h-screen bg-white overflow-hidden">
-      {/* Background with Animated Trees and Leaves */}
-      <div className="absolute inset-0">
-        {/* Tree SVG */}
-        <svg
-          ref={treeRef}
-          className="absolute top-0 left-0 w-1/3 h-full"
-          viewBox="0 0 200 400"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M100 350 L80 200 C60 150 40 100 60 50 C80 0 120 0 140 50 C160 100 140 150 120 200 L100 350"
-            fill="#14532d" // Darker green for contrast
-          />
-          <path
-            d="M90 200 C70 170 50 140 70 110 C90 80 110 80 130 110 C150 140 130 170 110 200"
-            fill="#15803d" // Lighter green for foliage
-          />
-        </svg>
-        {/* Animated Leaves */}
-        {[...Array(6)].map((_, index) => (
-          <div
-            key={index}
-            ref={(el) => (leavesRef.current[index] = el)}
-            className="absolute w-3 h-3 bg-green-700 rounded-full" // Darker green leaves
-            style={{
-              top: `${gsap.utils.random(10, 30)}%`,
-              left: `${gsap.utils.random(5, 25)}%`,
-            }}
-          />
-        ))}
-      </div>
-      {/* Subtle Overlay */}
-      <div className="absolute inset-0 bg-white bg-opacity-80"></div>
+    <div className="relative w-full min-h-screen overflow-hidden bg-black">
+      {/* Background Videos */}
+      <video
+        ref={videoRef1}
+        className="absolute top-0 left-0 w-full h-full object-cover"
+        style={{ willChange: "opacity" }}
+        src="/video1.mp4"
+        autoPlay
+        loop
+        muted
+        preload="auto"
+      />
+      <video
+        ref={videoRef2}
+        className="absolute top-0 left-0 w-full h-full object-cover"
+        style={{ willChange: "opacity" }}
+        src="/video4.mp4"
+        autoPlay
+        loop
+        muted
+        preload="auto"
+      />
+      <video
+        ref={videoRef3}
+        className="absolute top-0 left-0 w-full h-full object-cover"
+        style={{ willChange: "opacity" }}
+        src="/video3.mp4"
+        autoPlay
+        loop
+        muted
+        preload="auto"
+      />
+
+      {/* Overlay */}
+      <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50"></div>
 
       {/* Main Content */}
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 sm:px-6 md:px-8">
         {/* Heading */}
         <h1
           ref={headingRef}
-          className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 font-display text-center mb-12"
+          className="text-3xl sm:text-4xl md:text-5xl font-bold text-white font-display text-center mb-10"
         >
           Book Your Next Adventure
         </h1>
         {/* Form and Sidebar Container */}
-        <div className="flex flex-col md:flex-row w-full max-w-4xl gap-8">
+        <div className="flex flex-col md:flex-row w-full max-w-3xl gap-6">
           {/* Form */}
           <form
             ref={formRef}
             onSubmit={handleBooking}
-            className="w-full max-w-md p-6 bg-white bg-opacity-90 rounded-lg shadow-lg text-gray-900"
+            className="w-full max-w-sm p-4 bg-white bg-opacity-80 rounded-lg shadow-lg text-gray-900"
           >
-            <div className="space-y-4">
+            <div className="space-y-3">
               <div>
                 <label
                   htmlFor="name"
-                  className="block text-sm font-medium text-gray-900 font-display"
+                  className="block text-xs font-medium text-gray-900 font-display"
                 >
                   Name
                 </label>
@@ -359,8 +408,8 @@ const BookingForm = () => {
                   id="name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="Enter your name"
-                  className="w-full p-2 border border-gray-300 rounded-md bg-gray-100 text-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-600"
+                  placeholder="Your name"
+                  className="w-full p-2 text-sm border border-gray-300 rounded-md bg-gray-100 text-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-600"
                   required
                   ref={(el) => (inputRefs.current[0] = el)}
                 />
@@ -368,7 +417,7 @@ const BookingForm = () => {
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium text-gray-900 font-display"
+                  className="block text-xs font-medium text-gray-900 font-display"
                 >
                   Email
                 </label>
@@ -377,8 +426,8 @@ const BookingForm = () => {
                   id="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email"
-                  className="w-full p-2 border border-gray-300 rounded-md bg-gray-100 text-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-600"
+                  placeholder="Your email"
+                  className="w-full p-2 text-sm border border-gray-300 rounded-md bg-gray-100 text-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-600"
                   required
                   ref={(el) => (inputRefs.current[1] = el)}
                 />
@@ -386,17 +435,17 @@ const BookingForm = () => {
               <div>
                 <label
                   htmlFor="phone"
-                  className="block text-sm font-medium text-gray-900 font-display"
+                  className="block text-xs font-medium text-gray-900 font-display"
                 >
-                  Phone Number
+                  Phone
                 </label>
                 <input
                   type="tel"
                   id="phone"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  placeholder="Enter your phone number"
-                  className="w-full p-2 border border-gray-300 rounded-md bg-gray-100 text-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-600"
+                  placeholder="Your phone number"
+                  className="w-full p-2 text-sm border border-gray-300 rounded-md bg-gray-100 text-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-600"
                   required
                   ref={(el) => (inputRefs.current[2] = el)}
                 />
@@ -404,9 +453,9 @@ const BookingForm = () => {
               <div>
                 <label
                   htmlFor="dateTime"
-                  className="block text-sm font-medium text-gray-900 font-display"
+                  className="block text-xs font-medium text-gray-900 font-display"
                 >
-                  Date and Time
+                  Date & Time
                 </label>
                 <input
                   type="datetime-local"
@@ -414,7 +463,7 @@ const BookingForm = () => {
                   value={dateTime}
                   onChange={(e) => setDateTime(e.target.value)}
                   min={new Date().toISOString().slice(0, 16)}
-                  className="w-full p-2 border border-gray-300 rounded-md bg-gray-100 text-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-600"
+                  className="w-full p-2 text-sm border border-gray-300 rounded-md bg-gray-100 text-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-600"
                   required
                   ref={(el) => (inputRefs.current[3] = el)}
                 />
@@ -422,20 +471,20 @@ const BookingForm = () => {
               <div>
                 <label
                   htmlFor="trip"
-                  className="block text-sm font-medium text-gray-900 font-display"
+                  className="block text-xs font-medium text-gray-900 font-display"
                 >
-                  Trip Destination
+                  Destination
                 </label>
                 <select
                   id="trip"
                   value={trip}
                   onChange={(e) => setTrip(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded-md bg-gray-100 text-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-600"
+                  className="w-full p-2 text-sm border border-gray-300 rounded-md bg-gray-100 text-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-600"
                   required
                   ref={(el) => (inputRefs.current[4] = el)}
                 >
                   <option value="" disabled>
-                    Select a destination
+                    Select destination
                   </option>
                   <option value="Manali">Manali</option>
                   <option value="Kedarnath">Kedarnath</option>
@@ -445,44 +494,34 @@ const BookingForm = () => {
               <div>
                 <label
                   htmlFor="specialReq"
-                  className="block text-sm font-medium text-gray-900 font-display"
+                  className="block text-xs font-medium text-gray-900 font-display"
                 >
-                  Special Request (Optional)
+                  Special Request
                 </label>
                 <textarea
                   id="specialReq"
                   value={specialReq}
                   onChange={(e) => setSpecialReq(e.target.value)}
-                  placeholder="Enter any special requests"
-                  className="w-full p-2 border border-gray-300 rounded-md bg-gray-100 text-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-600"
-                  rows="4"
+                  placeholder="Any special requests"
+                  className="w-full p-2 text-sm border border-gray-300 rounded-md bg-gray-100 text-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-600"
+                  rows="3"
                   ref={(el) => (inputRefs.current[5] = el)}
                 />
               </div>
             </div>
-            <div className="mt-6 flex flex-col items-center">
-              <div className="flex items-center text-sm mb-4">
-                <span className="text-gray-600 font-body">
-                  Already have a booking?
-                </span>
-                <Link
-                  to="/bookings"
-                  className="ml-1 font-semibold text-teal-600 hover:underline font-body"
-                >
-                  View Bookings
-                </Link>
-              </div>
+            <div className="mt-4 flex flex-col items-center">
+              
               <button
                 ref={buttonRef}
                 type="submit"
                 disabled={isPending}
-                className={`w-full py-3 px-4 bg-teal-600 text-white rounded-full font-semibold font-body transition-all duration-300 ${
+                className={`w-full py-2 px-4 bg-teal-600 text-white rounded-full font-semibold text-sm font-body transition-all duration-300 ${
                   isPending ? "opacity-50 cursor-not-allowed" : ""
                 }`}
               >
                 {isPending ? (
                   <svg
-                    className="animate-spin h-5 w-5 mx-auto text-white"
+                    className="animate-spin h-4 w-4 mx-auto text-white"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
@@ -511,24 +550,54 @@ const BookingForm = () => {
           {/* Sidebar with Travel Assistance Info */}
           <div
             ref={sidebarRef}
-            className="w-full max-w-md p-6 bg-white bg-opacity-90 rounded-lg shadow-lg text-gray-900"
+            className="w-full max-w-sm p-4 bg-white bg-opacity-80 rounded-lg shadow-lg text-gray-900"
           >
-            <h2 className="text-2xl font-bold mb-4 font-display">
-              Exclusive Travel Assistance
+            <h2 className="text-xl font-bold mb-3 font-display">
+              Travel Assistance
             </h2>
-            <p className="text-lg mb-4 font-body">📞 Plan Your Dream Trip</p>
-            <p className="text-sm mb-4 font-body">
-              Not sure where to go next? Let our travel specialists guide you! Our
-              experts have curated journeys for thousands of travelers—let’s make
-              your next trip effortless and extraordinary.
+            <p className="text-sm mb-3 font-body">📞 Plan Your Dream Trip</p>
+            <p className="text-xs mb-3 font-body">
+              Not sure where to go? Our travel specialists have curated journeys
+              for thousands of travelers. Let’s make your trip extraordinary.
             </p>
-            <ul className="list-disc list-inside text-sm font-body space-y-2">
-              <li>Find the best destination for you</li>
-              <li>Plan according to the best season</li>
-              <li>Get exclusive travel tips & recommendations</li>
+            <ul className="list-disc list-inside text-xs font-body space-y-1">
+              <li>Best destination for you</li>
+              <li>Plan for the best season</li>
+              <li>Exclusive travel tips</li>
             </ul>
           </div>
         </div>
+      </div>
+
+      {/* Animated Tree and Leaves */}
+      <div className="absolute inset-0 z-0">
+        <svg
+          ref={treeRef}
+          className="absolute top-0 left-0 w-1/4 h-full"
+          viewBox="0 0 200 400"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M100 350 L80 200 C60 150 40 100 60 50 C80 0 120 0 140 50 C160 100 140 150 120 200 L100 350"
+            fill="#14532d"
+          />
+          <path
+            d="M90 200 C70 170 50 140 70 110 C90 80 110 80 130 110 C150 140 130 170 110 200"
+            fill="#15803d"
+          />
+        </svg>
+        {[...Array(6)].map((_, index) => (
+          <div
+            key={index}
+            ref={(el) => (leavesRef.current[index] = el)}
+            className="absolute w-2 h-2 bg-green-700 rounded-full"
+            style={{
+              top: `${gsap.utils.random(10, 30)}%`,
+              left: `${gsap.utils.random(5, 20)}%`,
+            }}
+          />
+        ))}
       </div>
     </div>
   );
